@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {loginUser} from '../redux/reducer';
@@ -19,10 +20,30 @@ class Auth extends Component {
 
     login = (e) => {
         e.preventDefault();
+
+        axios.post('/api/login', {email: this.state.email, password: this.state.password})
+        .then(res => {
+            //Sets the returned user data to the redux store state
+            this.props.loginUser(res.data)
+
+            //pushes us to the dashboard if we had a successful response
+            this.props.history.push('/dashboard')
+        })
+        .catch(err => console.log(err))
     }
 
     register = (e) => {
         e.preventDefault();
+
+        axios.post('/api/register', {email: this.state.email, password: this.state.password})
+        .then( res => {
+            //Sets the returned user data to the redux store state
+            this.props.loginUser(res.data)
+
+            //pushes us to the dashboard if we had a successful response
+            this.props.history.push('/dashboard')
+        })
+        .catch( err => console.log(err))
     }
 
     render(){
