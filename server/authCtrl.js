@@ -15,10 +15,12 @@ module.exports = {
         let salt = bcrypt.genSaltSync(5)
         const hash = bcrypt.hashSync(password, salt)
 
-        const newUser = await db.register_user({email, hash})
+        const newUser = await db.register_user({hash, email})
 
         //Take the newly generated user, and place them on the session, and send them to the client
         req.session.user = newUser[0]
+        //this assigns a session.user key for this session that is being maintained by the server
+
         res.status(201).send(req.session.user)
     },
     login: async (req, res) => {

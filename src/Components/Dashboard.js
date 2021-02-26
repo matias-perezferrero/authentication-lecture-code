@@ -21,11 +21,16 @@ const Dashboard = props => {
         return <Redirect to="/" />
     }
 
+    const createPost = () => {
+        axios.post('/api/posts').catch(err => console.log(err))
+    }
+
     return (
         <main className='dashboard'>
             <section className='user-info'>
                 <h3>{props.user.email}</h3>
                 <button onClick={logout}>Log Out</button>
+                <button onClick={createPost}>Create Post</button>
             </section>
         </main>
     )
